@@ -1,5 +1,5 @@
 module.exports = {
-  registerForm(res,req) {
+  registerForm(req,res) {
     return res.render("user/register")
   }
 }
