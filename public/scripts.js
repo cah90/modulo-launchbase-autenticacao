@@ -222,6 +222,8 @@ const Lightbox = {
 const Validate = {
   apply(input, func) { 
 
+    Validate.clearErrors(input)
+
     // Validade['isEmail'] or Validade.isEmail
     // Validate['isEmail]('nana@gmail.com')
 
@@ -230,7 +232,23 @@ const Validate = {
     input.value = results.value // É results.value pq retornamos um objeto.
 
     if(results.error) {
-      alert(results.error)
+      Validate.displayError(input, results.error)
+    }
+  },
+
+  displayError(input, error) {
+    const div = document.createElement('div')
+    div.classList.add('error')
+    div.innerHTML = error
+    input.parentNode.appendChild(div)
+    input.focus()
+  },
+
+  clearErrors(input) {
+    const errorDiv = input.parentNode.querySelector(".error")
+
+    if(errorDiv) {
+      errorDiv.remove()
     }
   },
 
@@ -243,10 +261,41 @@ const Validate = {
       error = "Email inválido"
     }
 
-    input.focus() 
-    
     return {
       error,
+      value
+    }
+  },
+
+  isCpfCnpj(value) {
+    let error = null
+
+    const cleanValues = value.replace(/\D/g, "")
+
+    if (cleanValues.length > 11 && cleanValues.length !== 14) {
+      error = "CNPJ incorreto"
+    }
+    else if (cleanValues.length < 12 && cleanValues.length !== 11) {
+      error = "CPF incorreto"
+    }
+
+    return {
+      error,
+      value
+    }
+  },
+
+  isCep(value) {
+    let error = null
+
+    const cleanValues = value.replace(/\D/g, "")
+
+    if(cleanValues.length !== 8) {
+      error = "CEP incorreto"
+    }
+
+    return {
+      error, 
       value
     }
   }
