@@ -27,7 +27,46 @@ const Mask = {
       style: 'currency',
       currency: 'BRL'
     }).format(value/100)
+  },
+
+  cpfCnpj(value) {
+    value = value.replace(/\D/g, "")
+
+    if(value.length > 14) {
+      value = value.slice(0,-1)
+    }
+
+    // Check if it is cpf or cnpj
+    if(value.length > 11) {
+      value = value.replace(/(\d{2})(\d)/, "$1.$2")
+      value = value.replace(/(\d{3})(\d)/, "$1.$2")
+      value = value.replace(/(\d{3})(\d)/, "$1/$2")
+      value = value.replace(/(\d{4})(\d)/, "$1-$2")
+    } else {
+      //cpf
+      value = value.replace(/(\d{3})(\d)/, "$1.$2")
+      value = value.replace(/(\d{3})(\d)/, "$1.$2")
+      value = value.replace(/(\d{3})(\d)/, "$1-$2")
+
+    }
+
+    return value
+
+  },
+
+  cep(value) {
+    value = value.replace(/\D/g, "")
+
+    if(value.length > 8) {
+      value = value.slice(0,-1)
+    }
+
+    value = value.replace(/(\d{2})(\d)/, "$1.$2")
+    value = value.replace(/(\d{3})(\d)/, "$1-$2")
+
+    return value
   }
+
 }
 
 const PhotosUpload = {
@@ -177,5 +216,38 @@ const Lightbox = {
     Lightbox.target.style.top = "-100%"
     Lightbox.target.style.bottom = "initial"
     Lightbox.closeButton.style.top = "-80px"
+  }
+}
+
+const Validate = {
+  apply(input, func) { 
+
+    // Validade['isEmail'] or Validade.isEmail
+    // Validate['isEmail]('nana@gmail.com')
+
+    let results = Validate[func](input.value)
+    console.log("input.value", input.value)
+    input.value = results.value // É results.value pq retornamos um objeto.
+
+    if(results.error) {
+      alert(results.error)
+    }
+  },
+
+  isEmail(value) {
+    let error = null
+
+    const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+
+    if(!value.match(mailFormat)) {
+      error = "Email inválido"
+    }
+
+    input.focus() 
+    
+    return {
+      error,
+      value
+    }
   }
 }
