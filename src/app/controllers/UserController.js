@@ -17,7 +17,22 @@ module.exports = {
     }
 
     //check if the user exists 
-    const { email, cpf_cnpj } = req.body
-    const user = await User.findOne()
+    const { email, cpf_cnpj, password, passwordRepeat } = req.body
+    
+    cpf_cnpj = cpf_cnpj.replace(/\D/g, "")
+    
+    const user = await User.findOne({
+      where: {email},
+      or: {cpf_cnpj}
+    })
+
+    if(user) return res.send('User already exists')
+
+    //check if password match
+    if(password != passwordRepeat) {
+      return res.send("Passwords are not equal")
+    } 
+
+    return res.send('passed')
   }
 }
