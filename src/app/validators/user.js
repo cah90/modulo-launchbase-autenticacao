@@ -4,7 +4,6 @@ async function post(req, res, next) {
 
   //check if it has all the fields filled
   const keys = Object.keys(req.body)
-  console.log('req.body', req.body)
 
   for (key of keys) {
     if (req.body[key] == "") {
@@ -46,10 +45,8 @@ async function post(req, res, next) {
       user: req.body,
       error: "Senha e confirmação não são as mesmas."
     })
-
-
-    next()
   }
+  next()
 }
 
 module.exports = {

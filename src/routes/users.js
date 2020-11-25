@@ -26,3 +26,4 @@ routes.get('/', UserController.show)
 // routes.delete('/', UserController.delete)
  
 module.exports = routes
+ 

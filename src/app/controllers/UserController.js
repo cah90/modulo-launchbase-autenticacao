@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../models/user')
 
 module.exports = {
   registerForm(req,res) {
@@ -10,7 +10,6 @@ module.exports = {
   },
 
   async post(req,res) {
-
     const userId = await User.create(req.body)
 
     return res.redirect('/users')
