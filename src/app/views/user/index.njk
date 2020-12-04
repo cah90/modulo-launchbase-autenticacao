@@ -2,26 +2,26 @@
 
 {% block content %}
 
-<section class="container form">
-  <form action="/products?_method=PUT" method="post" enctype="multipart/form-data">
+<section class="user-dashboard container form">
+  <form action="/users?_method=PUT" method="post">
 
     <div class="header">
-      <h3>Editar Produto {{productId}}</h3>
+      <h3>Detalhes</h3>
     </div>
 
     <div class="fields">
-      {% include "products/fields.njk" %}
+      {% include "user/fields.njk" %}
       <input 
         type='hidden'
         name='id'
-        value='{{product.id}}'>
+        value='{{user.id}}'>
     </div>
 
     <button class="button edit" type="submit">Atualizar</button>
   </form>
 
-  <form id="form-delete" action="/products?_method=DELETE" method="post">
-    <input type="hidden" name="id" value={{product.id}}>
+  <form id="form-delete" action="/users?_method=DELETE" method="post">
+    <input type="hidden" name="id" value={{user.id}}>
     <button class="button delete" type="submit">Deletar</button>
   </form>
 </section>
@@ -34,7 +34,7 @@
 
   formDelete.addEventListener("submit", function(event) {
     console.log('i was called')
-    const confirmation = confirm("Deseja deletar?")
+    const confirmation = confirm("Tem certeza de que deseja excluir sua conta? Essa operação não poderá ser desfeita.")
     if (!confirmation) {
       event.preventDefault()
     }
