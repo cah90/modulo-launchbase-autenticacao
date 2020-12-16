@@ -72,6 +72,20 @@ module.exports = {
   },
 
   reset(req,res) {
+    const { email, password, passwordRepeat, token } = req.body 
 
+    try {
+      //cria um novo hash de senha
+
+      //atualiza o usuário
+
+      //avisa o usuário que ele tem uma nova senha
+
+    } catch(err) {
+      console.error(err)
+      return res.render("session/password-reset", {
+        error: "Erro inesperado, tente novamente."
+      })
+    }
   }
 }
