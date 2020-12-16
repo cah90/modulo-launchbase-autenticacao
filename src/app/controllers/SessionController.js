@@ -1,3 +1,5 @@
+const User = require("../models/User")
+
 const crypto = require("crypto")
 const mailer = require("../lib/mailer")
 
@@ -22,8 +24,9 @@ module.exports = {
   },
 
   async forgot(req,res) {
-
     const user = req.user
+
+    try {
 
     //fazer um token para esse usuário
     const token = crypto.randomBytes(20).toString("hex")
@@ -56,5 +59,19 @@ module.exports = {
     return res.render("session/forgot-password", {
       success: "Verifique o seu email para resetar sua senha."
     })
+    } catch(err) {
+      console.log(err)
+      return res.render("session/forgot-password", {
+        error: "Erro insperado, tente novamente."
+      })
+    }
+  },
+
+  resetForm(req,res) {
+    return res.render("session/password-reset", {token: req.query.token})
+  },
+
+  reset(req,res) {
+
   }
 }
