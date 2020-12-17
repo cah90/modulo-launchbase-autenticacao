@@ -97,7 +97,7 @@ module.exports = {
     promiseResults.map(results => {
       results.rows.map(file => {
         try {
-          fs.unlink(file.path)
+          fs.unlinkSync(file.path)
         } catch(err) {
           console.error(err)
         }
